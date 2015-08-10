@@ -8,3 +8,5 @@ else{
   return str;
 }
 }
+
+truncate('A-tisket a-tasket A green and yellow basket', 11);
