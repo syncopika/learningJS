@@ -18,8 +18,8 @@ function pairwise(arr, arg) {
        if(a === arg){    //now we test each sum. if they equal, we want to push both of the numbers' indices into a new array
          
          newArr.push(i);
-         arr[i]=undefined;
-         newArr.push(j);
+         arr[i]=undefined; //after we push the index of the number, we make the value undefined so that it is not used again when evaluating.
+         newArr.push(j);   
          arr[j]=undefined;
        }
        
