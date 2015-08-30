@@ -106,26 +106,32 @@
 	 
 	 <script>
 	 
+//it is important to define the AJAX event before the DOM has loaded (or at least that's what i've read)
+//when I did put the AJAX event inside $('document').ready(), it didn't work...
 var getNewQuote = function() {
  
   $.ajax({
-    url: 'http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&jsonp=parseQuote&lang=en',
+    url: 'http://api.forismatic.com/api/1.0/?method=getQuote&format=jsonp&lang=en&jsonp=parseQuote', //notice how the function parseQuote is in here
     type: 'GET',
     contentType: 'application/json',
     dataType: 'jsonp',
   });
 }
 
+//here we define parseQuote, which is used to give us the data (it comes as an object, i.e. {property: 'value'})
+//I attached the actions that will place the data I want in my quote box here too.
+//it would have probably made more sense if I placed this function before I actually called it....
 function parseQuote(response) {
-var a = '<h2>' + response.quoteText + '</h2>';  //quoteText is a property of the json object returned. it gives just the quote. //you can view all the properties using the console in Chrome ->go to sources, then click the api folder
-var b = '<p>' + '-' + response.quoteAuthor + '</p>';   
-   $('#quoteBox2').empty();
-  $('#quoteBox2').append(a);
-  $('#quoteBox2').append(b);
+var a = '<h2>' + response.quoteText + '</h2>';  //quoteText is a property of the json object that is returned. it gives just the quote. 
+//you can view all the properties using the console in Chrome ->go to sources, then click the api folder when you have connected
+  //the AJAX event (i.e. in function getNewQuote) to a click event.
+var b = '<p>' + '-' + response.quoteAuthor + '</p>';   //add the author of quote, plus add a dash in front
+   $('#quoteBox2').empty(); //when changing a new quote, remove the old one
+  $('#quoteBox2').append(a); //add quote
+  $('#quoteBox2').append(b);  //add author
   }
 	 
-
-	
+//when the document is ready...
 	 $('document').ready(function(){
 	 
 	 
@@ -151,9 +157,10 @@ var b = '<p>' + '-' + response.quoteAuthor + '</p>';
 	 //for 2nd quote box 
 
 	getNewQuote(); //this will load a new quote in quoteBox2 immediately the page loads
-  $('#btn2').click(getNewQuote);
+         $('#btn2').click(getNewQuote); //link getNewQuote with a click event on the second button on the page
 
 });
+
 
  
 	 </script>
