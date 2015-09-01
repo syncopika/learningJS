@@ -10,7 +10,7 @@ for(i=min;i<=max; i++){
 }
   
 function gcd(a,b){      //this formula calculates greatest common denominator between two numbers
-  while (b!==0){
+  while (b!==0){        //looks like bubble sort!
     var hold = b;
     b = a%b;
     a = hold;
