@@ -15,3 +15,4 @@ function slasher(arr, howMany) {
 }
 
 slasher([1, 2, 3], 2);
+//[3] should be the output
