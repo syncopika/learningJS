@@ -101,7 +101,7 @@
 	   $('#temperature').html(g);
 	   }
 	   else{
-       g = c + " °C";
+	   g = c + " °C";
 	   $('#temperature').html(g);
 	   }
 	 };
@@ -114,8 +114,10 @@
 	$('#temperature').html(g);
 	};
 	
+	//get a particular bg image depending on the weather description
+	//I used regex to get certain keywords to match the picture I want displayed
 	function getBG(info){
-	var clear = /(clear)/g;
+	var clear = /(clear)/g;  
 	var clouds = /(clouds)/g;
 	var ocast = /(overcast)/g;
 	var rain = /(rain)|(drizzle)/g;
@@ -124,7 +126,7 @@
 		$('body, html').css('background-image', "url(\'https://farm6.staticflickr.com/5673/20969164172_51d6d9938f_k.jpg\')");
 		$('#link').html('<a href=\'https://www.flickr.com/photos/mjmoers/20969164172/\'>Picture by M. Moers</a>');
 	}
-	else if(clouds.test(info)){  //some clouds
+	else if(clouds.test(info)){  //some clouds (not overcast)
 		$('body, html').css('background-image', "url(\'https://farm1.staticflickr.com/327/20222626375_1154edeac2_k.jpg\')");
 		$('#link').html('<a href=\'https://www.flickr.com/photos/mjmoers/20222626375/\'>Picture by M. Moers</a>');				
 	}
@@ -149,17 +151,18 @@
     loc = info.loc.split(','); //splits up the location property value into an array (see ipinfo.io to see how the information is arranged)
 	weather = 'http://api.openweathermap.org/data/2.5/weather?lat=' + loc[0] + '&lon=' + loc[1] + '&APPID=9281ada8b7a2c534556434c55de06741';
 	console.log(weather);//check console to make sure weather retrieved is accurate (or at least the location is accurate lol)
-	  $.ajax({
-      dataType: "jsonp",
-      url: weather,
-      success: function(data){
+	$.ajax({
+          dataType: "jsonp",
+          url: weather,
+          success: function(data){
 		convertUnits(data.main.temp);
 		getBG(data.weather[0].description);
 		$('#description').html(data.weather[0].description);
 		$('#humidity').html('humidity: ' + data.main.humidity + '%');
 		$('#wind').html('wind speed and direction: ' + data.wind.speed + ' m/s, ' + data.wind.deg + '°');
 		$('#description').append('<img id=\'icon\' src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png\" >');  
-	  }
+	        //^ that img id = 'icon' really has no purpose here. I think I gave it an id to test some css properties on it.
+          }
 	  });
 });
     
