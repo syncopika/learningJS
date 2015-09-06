@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+	 <head>
+	 <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script> 
+	 <link href='https://fonts.googleapis.com/css?family=Noto+Sans' rel='stylesheet' type='text/css'>
+	 <title>syncopika's local weather getter</title>
+	 </head>
+	 
+	 <style>
+	
+	 .container{
+	 text-align:center;
+	 }
+	 
+	 #weather{
+	 margin-top:2%;
+	 }
+	
+	 html,body{
+	 background:url('https://farm1.staticflickr.com/663/21057269582_0777732e1d_k.jpg') no-repeat center center fixed;
+	 -webkit-background-size: cover;
+	 -moz-background-size: cover;
+	 -o-background-size: cover;
+	 background-size: cover;
+	 font-family: 'Noto Sans', sans-serif;
+	 color: #FFFFFF;
+	}
+	
+	#link a{
+	color:#FFFFFF;
+	}
+	
+	#extra{
+	margin-top:10px;
+	}
+	
+	#extra a{
+	color:#FFFFFF;
+	}
+	 </style>
+	 
+	 <body>
+     <div class='container'>
+	 
+	 <div class='row'>
+	 <div class='col-xs-12'>
+	 <h1 id='header'>how's the weather?</h1>
+	 </div>
+     </div>
+	
+	
+	<div id='weather' class='row'>
+    <div class='col-sm-2 col-sm-offset-3'><h2 id='location'></h2></div>
+    <div class='col-sm-2'><h2 id='temperature'></h2><button class='btn-primary .btn-sm' onclick='switchUnits()'>click to convert</button></div>
+    <div class='col-sm-2'><h2 id='description'></h2></div>
+	</div>
+	
+	<div class='row'>
+    <div class='col-xs-12'>
+    <div id='info'>
+		<h3>more info</h3>
+		<p id='humidity'></p>
+		<p id='wind'></p>
+		<p id='date'></p>
+	</div>
+	</div>
+	</div>
+	
+	<div id='extra' class='row'>
+    <div class='col-xs-12'>
+	<p>thanks to: </p>
+	<p><a href='http://openweathermap.org/'>open weather map</a></p>
+	<p><a href='http://ipinfo.io'>ipinfo.io</a></p>
+	<p id='link'></p>
+	</div>
+	</div>
+	
+	</div>
+
+     </body>
+
+	 <script>
+	var loc; //loc for location (latitude and longitude)
+	var f; //f for fahrenheit
+	var g; //this is arbitrary lol :P
+	var c; //c for celsius
+	var weather;
+	
+	//get user's local date and time
+	var date = new Date();
+	$('#date').html(date);
+	
+	 function switchUnits(){
+	   if(g[g.length-1] == "C"){
+	   g = f + " °F";
+	   $('#temperature').html(g);
+	   }
+	   else{
+       g = c + " °C";
+	   $('#temperature').html(g);
+	   }
+	 };
+
+
+	function convertUnits(number){
+	f = Math.round((number - 273.15)* 1.8000 + 32.00); //kelvin to fahrenheit
+	c = Math.round(number - 273.15); //kelvin to celsius
+	g = f + '°F';
+	$('#temperature').html(g);
+	};
+	
+	function getBG(info){
+	var clear = /(clear)/g;
+	var clouds = /(clouds)/g;
+	var ocast = /(overcast)/g;
+	var rain = /(rain)|(drizzle)/g;
+	
+	if(clear.test(info)){  //clear sky
+		$('body, html').css('background-image', "url(\'https://farm6.staticflickr.com/5673/20969164172_51d6d9938f_k.jpg\')");
+		$('#link').html('<a href=\'https://www.flickr.com/photos/mjmoers/20969164172/\'>Picture by M. Moers</a>');
+	}
+	else if(clouds.test(info)){  //some clouds
+		$('body, html').css('background-image', "url(\'https://farm1.staticflickr.com/327/20222626375_1154edeac2_k.jpg\')");
+		$('#link').html('<a href=\'https://www.flickr.com/photos/mjmoers/20222626375/\'>Picture by M. Moers</a>');				
+	}
+	else if(ocast.test(info)){  //overcast
+		$('body, html').css('background-image', "url(\'https://farm1.staticflickr.com/445/19779760095_687ef813c6_k.jpg\')");
+		$('#link').html('<a href=\'https://www.flickr.com/photos/mjmoers/19779760095/\'>Picture by M. Moers</a>');
+	}
+	else if(rain.test(info)){ //rainy
+		$('body, html').css('background-image', "url(\'https://farm8.staticflickr.com/7559/15940405215_f328f90099_k.jpg\')");
+		$('#link').html('<a href=\'https://goo.gl/v5Tlju\'>Picture by Carlos ZGZ</a>');
+	}
+    else{   //default
+		$('body, html').css('background-image', "url(\'https://farm1.staticflickr.com/663/21057269582_0777732e1d_k.jpg\')");
+		$('#link').html('<a href=\'https://www.flickr.com/photos/mjmoers/21057269582/\'>Picture by M. Moers</a>');
+	}
+	};
+	
+	
+ //because ipinfo itself acts as an api, you can just pass the website with /json attached to $.get. easy!
+	$.get('http://ipinfo.io/json', function(info){
+	$('#location').html(info.city + ', ' + info.region); //we'll get the location info here b/c it contains both state and city. may not match up exactly with the location for the weather info, but it's close.
+    loc = info.loc.split(','); //splits up the location property value into an array (see ipinfo.io to see how the information is arranged)
+	weather = 'http://api.openweathermap.org/data/2.5/weather?lat=' + loc[0] + '&lon=' + loc[1] + '&APPID=9281ada8b7a2c534556434c55de06741';
+	console.log(weather);//check console to make sure weather retrieved is accurate (or at least the location is accurate lol)
+	  $.ajax({
+      dataType: "jsonp",
+      url: weather,
+      success: function(data){
+		convertUnits(data.main.temp);
+		getBG(data.weather[0].description);
+		$('#description').html(data.weather[0].description);
+		$('#humidity').html('humidity: ' + data.main.humidity + '%');
+		$('#wind').html('wind speed and direction: ' + data.wind.speed + ' m/s, ' + data.wind.deg + '°');
+		$('#description').append('<img id=\'icon\' src="http://openweathermap.org/img/w/' + data.weather[0].icon + '.png\" >');  
+	  }
+	  });
+});
+    
+
+	 </script>
+	 
+</html>
