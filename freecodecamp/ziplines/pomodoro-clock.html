@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html>
+	 <head>
+	 <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+	 <title>syncopika's pomodoro clock</title>
+	 </head>
+	 
+	 <style>
+	 
+	.row{
+	text-align:center;
+	}
+	
+	.glyphicon{
+	cursor: pointer;
+	}
+	
+	 #row2{
+	 margin-top: 2%;
+	 text-align:center;
+	 }
+	 
+	 #clock{
+	 margin:0 auto;
+	 border-radius: 50%;
+	 border: 2px solid #83F52C;
+	 height: 200px;
+	 width: 200px;
+	 }
+	 
+	 #clockBG{
+	 height:0;
+	 background-color:blue;
+	 }
+	
+	
+	#timer{
+	margin-top:50%;
+	}
+
+	 </style>
+	 
+	 <body>
+	 <div class='container'>
+	 
+	 <div id='header' class='row'>
+	 <div class='col-sm-12'>
+	  <h1 class='text-primary'> pomodoro clock </h1>
+	  <p>click on the timer to start! </p>
+	  </div>
+	  </div>
+	  
+	 
+	 <div id='row2' class='row'>
+	 
+	 <div class='col-sm-1 col-sm-offset-4'>
+	 <div class='icon'>
+	 <span class="glyphicon glyphicon-minus"  aria-hidden="false" onclick='subtract()'></span>
+	 </div>
+	 </div>
+	 
+	 <div id='clock' class='col-sm-2'>
+	 <div id='clockBG'>
+	 <h1 id='timer' class='text-primary'></h1>
+	 </div>
+	 </div>
+	 
+	 
+	 <div class='col-sm-1'>
+	 <div class='icon'>
+	 <span class="glyphicon glyphicon-plus" aria-hidden="false" onclick='add()'></span>
+	 </div>
+	 </div>
+	 
+	 
+	 </div>
+	 </div> 
+ 
+	 </body>
+	 
+	 <script>
+	 //leave the color thing alone for now.
+	 //try to get a pause and resume function working
+	 
+	 var Timer = document.getElementById('timer');
+	 var TotalSeconds = 1500; //by default, minutes is set at 25 
+	 var changeSeconds;
+	 //var bgColorHeight = $('#clock').height() / TotalSeconds;
+	 //var bgColorCurrent;
+	 var timerOn = false;
+	 
+	 //this is the timer itself
+	 function theTimer(){
+	 timerOn = true;
+	 UpdateTimer();
+	 setTimeout('tick()', 1000);
+	 }
+
+	 //tick makes the seconds decrease
+	 function tick(){
+	 if (TotalSeconds <= 0){
+	 return; //exits function
+	 }
+	 TotalSeconds -= 1;
+	 UpdateTimer();
+	 setTimeout('tick()',1000); //this causes the subtraction of a second every second
+	 }
+	 
+	 //adds 0 padding 
+	 function LeadingZero(time){
+	 if(time < 10){
+	 return '0' + time;
+	 }
+	 else{
+	 return time;
+	 }
+	 }
+	 //shorthand: return (time < 10)? '0' + time : time;
+	 
+	 //when the seconds decrease, update the inner HTML
+	 function UpdateTimer(){
+	 var Seconds = TotalSeconds;
+	 var Hours = Math.floor(Seconds / 3600);
+	 Seconds = Seconds - Hours*(3600); 
+	 var Minutes = Math.floor(Seconds / 60);
+	 Seconds = Seconds - Minutes*(60);	 
+	 var TimeStr = LeadingZero(Hours) + ':' + LeadingZero(Minutes) + ':' + LeadingZero(Seconds); 
+	 Timer.innerHTML = TimeStr; 
+	 //get the background color to fill up the clock
+	 //bgColorCurrent = $('#clockBG').height(); //supposed to be 0 at default
+	 //bgColorCurrent += bgColorHeight;
+	 //$('#clockBG').css('height',bgColorCurrent);
+	 }
+	 
+	 
+	 //this is to edit the timer before starting
+	 function zeroPads(a){
+	 if (a < 10){
+	 Timer.innerHTML = '00:' +  '0'+a  + ':00';
+	 }
+	 else{Timer.innerHTML = '00:' +  a  + ':00';}	 
+	 };
+	  
+	 //this function applies to the plus icon
+	 function add(){
+	 if(timerOn === false){
+	 TotalSeconds += 60;  //because TotalSeconds is a global variable, any changes here will be passed to updateTimer() and tick().
+	 changeSeconds = TotalSeconds/60;
+	 zeroPads(changeSeconds);
+	 }
+	 };
+	  
+	 //this function applies to the minus icon
+	 function subtract(){
+	 if(timerOn === false){
+	 TotalSeconds -= 60;
+	 if(TotalSeconds <= 0){
+	 TotalSeconds = 0;        //make sure we don't go lower than 0
+	 }
+	 changeSeconds = TotalSeconds/60;
+	 zeroPads(changeSeconds);
+	 }
+	 };
+	 
+	 
+	 //this is where things start
+     Timer = document.getElementById('timer');
+	 Timer.innerHTML = '00:' + TotalSeconds/60 + ':00';
+	 $('#timer').click(theTimer);
+
+	 
+	 /*
+	 var a = 15;
+	 $('#timer').html(a);
+	 function subtract(a){ return a-1};
+	 
+	 $('#timer').click(function(){
+	 
+	 setInterval(function(){ 
+	 if(a > 0){
+	 a = subtract(a);
+	 $('#timer').empty();
+	 $('#timer').append(a);
+	 }
+	 },1000);
+	 
+	 });
+
+	//here's what creates the timer
+	 function CreateTimer(TimerID, Time){
+	 Timer = document.getElementById(TimerID);
+	 TotalSeconds = Time;
+	 UpdateTimer();
+	 window.setTimeout('tick()', 1000);
+	 }
+	 */
+    
+	 
+	 </script>
+	 
+	 </html>
