@@ -1,16 +1,22 @@
-<!DOCTYPE html>
-
 <html>
 	 <head>
 	 <meta charset="utf-8">
-     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-     <meta name="viewport" content="width=device-width, initial-scale=1">
+	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	 <meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 	 <title>syncopika's pomodoro clock</title>
 	 </head>
 	 
 	 <style>
+	 
+	html,body{
+	background-color:#565656;
+	} 
+	
+	.text-primary,p{
+	color:white;
+	}
 	 
 	.row{
 	text-align:center;
@@ -21,7 +27,7 @@
 	}
 	
 	 #row2{
-	 margin-top: 2%;
+	 margin-top: 5%;
 	 text-align:center;
 	 }
 	 
@@ -37,8 +43,7 @@
 	 height:0;
 	 background-color:blue;
 	 }
-	
-	
+
 	#timer{
 	margin-top:50%;
 	}
@@ -93,12 +98,14 @@
 	 //var bgColorHeight = $('#clock').height() / TotalSeconds;
 	 //var bgColorCurrent;
 	 var timerOn = false;
-	 
+     var ticker;
+	
+ 
 	 //this is the timer itself
 	 function theTimer(){
 	 timerOn = true;
 	 UpdateTimer();
-	 setTimeout('tick()', 1000);
+	 ticker = setInterval(tick,1000);
 	 }
 
 	 //tick makes the seconds decrease
@@ -108,7 +115,6 @@
 	 }
 	 TotalSeconds -= 1;
 	 UpdateTimer();
-	 setTimeout('tick()',1000); //this causes the subtraction of a second every second
 	 }
 	 
 	 //adds 0 padding 
@@ -171,8 +177,20 @@
 	 //this is where things start
      Timer = document.getElementById('timer');
 	 Timer.innerHTML = '00:' + TotalSeconds/60 + ':00';
-	 $('#timer').click(theTimer);
-
+     
+     function stop(){
+	 clearInterval(ticker);
+	 }
+     
+	 $('#timer').click(function(){
+	 if(timerOn === false){
+	 theTimer();
+	 }
+	 else if(timerOn === true){
+	 stop();
+	 timerOn = false;
+     }
+	 });
 	 
 	 /*
 	 var a = 15;
