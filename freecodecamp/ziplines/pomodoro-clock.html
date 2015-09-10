@@ -98,7 +98,7 @@
 	 //var bgColorHeight = $('#clock').height() / TotalSeconds;
 	 //var bgColorCurrent;
 	 var timerOn = false;
-     var ticker;
+         var ticker;
 	
  
 	 //this is the timer itself
@@ -175,13 +175,14 @@
 	 
 	 
 	 //this is where things start
-     Timer = document.getElementById('timer');
+	 Timer = document.getElementById('timer');
 	 Timer.innerHTML = '00:' + TotalSeconds/60 + ':00';
      
-     function stop(){
+	 function stop(){
 	 clearInterval(ticker);
 	 }
-     
+        
+         //control pausing and resuming timer
 	 $('#timer').click(function(){
 	 if(timerOn === false){
 	 theTimer();
@@ -189,7 +190,7 @@
 	 else if(timerOn === true){
 	 stop();
 	 timerOn = false;
-     }
+          }
 	 });
 	 
 	 /*
