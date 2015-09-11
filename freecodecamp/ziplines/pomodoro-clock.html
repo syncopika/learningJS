@@ -113,9 +113,11 @@
 	 //tick makes the seconds decrease
 	 function tick(){
 	 if (TotalSeconds <= 0){
-	 $('#clock').effect("shake", {times: 3}); //shakes clock continuously
-	 return; //return makes the timer stay at 0
+	 $('#clock').css('border', 'solid 2px #FF4747'); //sets border red when 0
+	 $('#clock').effect("shake", {times: 3}); //shake effect
+	 return; //exits function (i.e. stops decreasing)
 	 }
+	 $('#clock').css('border', 'solid 2px #83F52C'); //sets border neon green when time not 0
 	 TotalSeconds -= 1;
 	 UpdateTimer();
 	 }
