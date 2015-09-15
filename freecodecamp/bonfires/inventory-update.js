@@ -14,6 +14,7 @@ var newInv = [
 ];
 
 
+//It's necessary to modify the array, not make a new one!!
 function inventory(arr1, arr2) {
 
 var list = {}; //hold all the things in the first array
@@ -43,8 +44,6 @@ var list3 = {}; //hold all items that both the first and second array have, incl
     }
    }
 
-  
-
 //this adds the current values (i.e. arr1[0][0]) for each item in arr1 (so that we aren't using a new array)
 for(i=0;i<arr1.length;i++){
   for(property in list3){
@@ -54,7 +53,7 @@ for(i=0;i<arr1.length;i++){
   }
 }
 
-//at this point, if conole.log(arr1), the numbers for each item should have been updated to reflect th additions from 
+//at this point, if you console.log(arr1), the numbers for each item should have been updated to reflect the additions from 
 //the second array. however, the new items haven't been added yet!
   
 //here I add to the first array any new items that are only in the second array.
@@ -64,7 +63,6 @@ for(i=0;i<arr1.length;i++){
       arr1.push(arr2[i]);
     }
   }
-
  return arr1.sort(function(a,b){return a[1] > b[1]}); //this places everything in alphabetical order!
 }
 
