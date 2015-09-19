@@ -83,17 +83,17 @@ function friendly(str) {
     newArr.push(getMonth(a1[1]) + ' ' + Math.min(a1[2],a2[2]) + getEnding(a1[2]));
     newArr.push(getMonth(a2[1]) + ' ' + Math.max(a1[2],a2[2]) + getEnding(a2[2]))
   }
-  else if(parseInt(a2[0]) === parseInt(a1[0]) + 1){ //if consecutive years
-   if(parseInt(a1[2]) > parseInt(a2[2])){
+  else if(parseInt(a2[0]) === parseInt(a1[0]) + 1){ 
+   if(parseInt(a1[2]) > parseInt(a2[2])){ //if consecutive years
    newArr.push(getMonth(a1[1]) + ' ' + Math.max(a1[2],a2[2]) + getEnding(a1[2]) + ', ' + a1[0]);
    newArr.push(getMonth(a2[1]) + ' ' + Math.min(a1[2],a2[2]) + getEnding(a2[2]) + ', ' + a2[0]);
    }
-   else{
+   else{ //if not consecutive years
     newArr.push(getMonth(a1[1]) + ' ' + Math.min(a1[2],a2[2]) + getEnding(a1[2]));
    newArr.push(getMonth(a2[1]) + ' ' + Math.max(a1[2],a2[2]) + getEnding(a2[2]));     
    } 
    }
-  else{
+  else{ //just give back the dates in the order they came in the array, with slight modification (i.e. month name)
     newArr.push(getMonth(a1[1]) + ' ' + parseInt(a1[2]) + getEnding(a1[2]) + ', ' + a1[0]);
     newArr.push(getMonth(a2[1]) + ' ' + parseInt(a2[2]) + getEnding(a2[2]) + ', ' + a2[0]);
   }
