@@ -11,7 +11,7 @@ var total = 0;
 
 for(i=0;i<a.length;i++){
 a = a.replace(' ','').toUpperCase();
-a = a.replace(/[\W]/g,'');
+a = a.replace(/[\W_0-9]/g,'');
 }
 
 //get tally of unique letters in string
