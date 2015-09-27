@@ -1,4 +1,7 @@
 //again only a partial solution grrrrr
+//it works for all the examples they give! :<
+//wait, I know why it's not working!
+//what if var n is a two-digit number??? you forgot that!
 
 var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
@@ -40,3 +43,25 @@ if(!(answer > 0)){
 console.log(answer)
     }
 });
+
+//2nd go at it
+//got a score of 50 from 30 now with this
+var s = //input line
+var z = s.split(';')
+var n = parseInt(z[0]);
+var arr = z[1].split(' ');
+arr = arr.map(function(a){return parseInt(a)});
+var totals =[];
+
+for(i=0;i<Math.round(arr.length/2)+1;i++){
+  var total = 0;
+  for(j=i;j<n+i;j++){
+    total += arr[j];
+  }
+  totals.push(total);
+}
+var answer = Math.max.apply(Math, totals);
+if(!(answer > 0)){
+  answer = 0;
+}
+console.log(answer)
