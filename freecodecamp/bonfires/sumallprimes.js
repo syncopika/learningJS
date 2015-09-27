@@ -34,3 +34,21 @@ for(i=3;arr.length<1000;i++){ //remember that the second bit, i.e. 'arr.length<1
 }
 arr = arr.reduce(function(a,b){return a + b});
 console.log(arr)
+
+//5:52 pm here's another way to look at it. probably shaves off a few milliseconds without the array?
+
+var total = 2;
+var counter = 1;
+for(i=3;counter<1000;i=i+2){
+  var prime = true;
+  for(j=2;j<i;j++){
+   if(i%j === 0 && i!==j){
+     prime = false;
+   }
+ }
+  if(prime === true){
+    total+=i;
+    counter++;
+  }
+}
+console.log(total)
