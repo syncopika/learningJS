@@ -29,3 +29,31 @@ for(property in table2){
 console.log(table) //not needed
 console.log(table2) //not needed
 console.log(cycle)
+
+//092715 10:16 pm est BOOM WIN!
+var a = line;
+a = a.split(' ');
+var table = {};
+var table2 = {};
+var cycle = '';
+
+for(i=0;i<a.length;i++){
+  if(table[a[i]] === undefined){
+    table[a[i]] = 0;
+  }
+  else{
+    table[a[i]] += 1;
+  }
+}
+
+for(property in table){
+  if(table[property] > 0){
+    table2[a.indexOf(property)] = property;
+  }
+}
+
+for(property in table2){
+  cycle += table2[property] + ' '; //space here is important!
+}
+
+console.log(cycle.trim()) //trim trailing whitespace!
