@@ -78,7 +78,7 @@ var arr = z[1].split(' ');
 arr = arr.map(function(a){return parseInt(a)});
 var totals =[];
 
-for(i=0;i<Math.floor(arr.length/2)+1;i++){  //changed round to floor here. the +1 covers an extra distance(sometimes necessary), but may result in NaN
+for(i=0;i<Math.floor(arr.length/2)+1;i++){  //changed round to floor. the +1 covers an extra distance(sometimes necessary), but may result in NaN
   var total = 0;
   for(j=i;j<n+i;j++){
     total += arr[j];
