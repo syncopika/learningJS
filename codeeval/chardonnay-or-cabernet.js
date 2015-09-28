@@ -36,3 +36,48 @@ if(newName === ''){
 
 newName = newName.trim();
 console.log(newName)
+
+//score of 97.5! but still partial....:< 6:47 pm, est 092815
+
+ar fs  = require("fs");
+fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
+if (line != "") {
+var a = line;
+a = a.split('|');
+var wineName = a[0].trim();
+wineName = wineName.split(' ');
+var frag= a[1].trim(); 
+var finalName='';
+
+for(i=0;i<wineName.length;i++){
+  var table = {}; //create a new table for each wine name
+  for(j=0;j<frag.length;j++){
+    //find if there's a match for each letter in 2nd string to each wine name
+    var reg = new RegExp(frag[j], 'g') //create separate regex for each letter
+    if(wineName[i].match(reg) !== null){ //compare with current wine name
+     if(table[frag[j]] === undefined){
+       table[frag[j]] = 1;
+     }
+      else{
+        table[frag[j]] += 1;
+      }
+  }
+}  
+  //check table for each wine name
+  var total = 0
+  for(property in table){
+    total += table[property];
+    }
+
+   if(total === frag.length){
+      finalName += wineName[i] + ' ';
+}
+}
+if(finalName === ''){
+  finalName = 'False';
+}
+
+finalName = finalName.trim();
+console.log(finalName)
+    }
+});
