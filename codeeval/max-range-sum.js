@@ -65,3 +65,39 @@ if(!(answer > 0)){
   answer = 0;
 }
 console.log(answer)
+
+//woohoo solved it! 10:44pm est 092715
+
+var fs  = require("fs");
+fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
+    if (line != "") {
+var s = line;
+var z = s.split(';')
+var n = parseInt(z[0]);
+var arr = z[1].split(' ');
+arr = arr.map(function(a){return parseInt(a)});
+var totals =[];
+
+for(i=0;i<Math.floor(arr.length/2)+1;i++){  //changed round to floor here. the +1 covers an extra distance(sometimes necessary), but may result in NaN
+  var total = 0;
+  for(j=i;j<n+i;j++){
+    total += arr[j];
+  }
+  totals.push(total);
+}
+
+//modify array to eliminate NaNs
+for(i=0;i<totals.length;i++){
+  if(isNaN(totals[i])){
+    totals[i] = 0;
+  }
+}
+//now we can get max from array safely?
+var answer = Math.max.apply(Math, totals);
+if(!(answer > 0)){
+  answer = 0;
+}
+
+console.log(answer)
+    }
+});
