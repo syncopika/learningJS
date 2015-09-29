@@ -39,7 +39,7 @@ console.log(newName)
 
 //score of 97.5! but still partial....:< 6:47 pm, est 092815
 
-ar fs  = require("fs");
+var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
 if (line != "") {
 var a = line;
