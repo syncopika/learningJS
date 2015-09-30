@@ -81,3 +81,66 @@ finalName = finalName.trim();
 console.log(finalName)
     }
 });
+
+//4:59 pm est 093015 yes, solved!! :D
+//the tricky part is that when you compare a wine name with the fragment of letters, you have to make sure that a
+//wine name has at least the same number of letters (for each letter if there are multiple).
+//i.e. 'xxax xaxax | xxxaa' - the first 'name' (lol that's not even a wine) should not be printed because although it 
+//has 3 x's, it doesn't have 2 a's, which is necessary to fully meet the conditions.
+
+var fs  = require("fs");
+fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
+if (line != "") {
+var a = line;
+var table = {};
+var wineName = a.split('|')[0].trim().split(' ');
+var frag = a.split('|')[1].trim()
+var frag2 = [];
+var finalName = '';
+//we need an array of just the unique characters (no duplicates). we'll loop through this in a bit...
+for(i=0;i<frag.length;i++){
+  if(frag2.indexOf(frag[i]) === -1){
+    frag2.push(frag[i]);
+  }
+}
+//set up a table so we can tally up the unique characters in the fragment
+for(i=0;i<frag.length;i++){
+  if(table[frag[i]] === undefined){
+    table[frag[i]] = 1;
+  }
+  else{
+    table[frag[i]] += 1;
+  }
+}
+//let's go through each wine name and compare how many of each unique letter from frag2 is in each wine name
+//if each letter has the same total (or more) as in the table, then we'll put that wine name in a new string.
+for(i=0;i<wineName.length;i++){
+  var truthTable = [];
+  for(j=0;j<frag2.length;j++){
+    var regx = new RegExp(frag2[j], 'g'); //make sure to use global, which finds all the occurrences in a string!
+    //.match is really helpful in finding out how many of a specified letter is in a word. it returns an array.
+    if((wineName[i].match(regx)) !== null){
+    if((wineName[i].match(regx)).length >= table[frag2[j]]){
+      truthTable.push(true);
+    }
+    else{
+      truthTable.push(false);
+    }
+    }
+    else{
+      truthTable.push(false);
+    }
+ 
+  }
+  if(!truthTable.some(function(el){return el === false})){
+    finalName += wineName[i] + ' ';
+  }
+}
+
+if(finalName === ''){
+  finalName = 'False';
+}
+console.log(finalName.trim())
+
+    }
+});
