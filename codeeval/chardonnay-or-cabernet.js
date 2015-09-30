@@ -115,6 +115,8 @@ for(i=0;i<frag.length;i++){
 //let's go through each wine name and compare how many of each unique letter from frag2 is in each wine name
 //if each letter has the same total (or more) as in the table, then we'll put that wine name in a new string.
 for(i=0;i<wineName.length;i++){
+  //this truth table will help log if the totals for each letter is equal to or more than the totals given in my table
+  //if the total for a letter in the fragment is less than what's stated in the table, put false in the truth table.
   var truthTable = [];
   for(j=0;j<frag2.length;j++){
     var regx = new RegExp(frag2[j], 'g'); //make sure to use global, which finds all the occurrences in a string!
@@ -130,8 +132,8 @@ for(i=0;i<wineName.length;i++){
     else{
       truthTable.push(false);
     }
- 
   }
+  //if there is NOT a false in my truth table (i.e. everything is true)...add the wine name
   if(!truthTable.some(function(el){return el === false})){
     finalName += wineName[i] + ' ';
   }
