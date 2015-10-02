@@ -1,3 +1,5 @@
+//got a 92.5%! but only ~55 ranking points...
+
 var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
 if (line != "") {
@@ -24,7 +26,7 @@ else{
 
 //we have a problem. only one word block can match one letter. if a word block contains two letters that match the word,
 //it can only be allowed to match one letter
-//I thought adding a break; would help. it didn't really :< but 87.5%!
+//I thought adding a break; would help. it didn't really :< dropped to 87.5%...but ~69 points...
 
 var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
