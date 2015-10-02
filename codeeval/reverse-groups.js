@@ -42,6 +42,8 @@ var newArr = [];
 for(i=0;i<n;i=i+b){
   var subArr = [];
   for(j=i;j<b+i;j++){
+    //a[j] might be undefined
+    //need to think about why though...
     if(a[j] === undefined){
       break;
     }
