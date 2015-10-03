@@ -120,5 +120,45 @@ for(i=0;i<b.length;i++){
 var i = 0;   //for some reason I'm unsure of right now, the while loop gave me some success. :/
 while(i<n){
 console.log(c[i]);
-n++;
+n++; //LOL how'd this even get through? this is an error! (should be i++)
+}
+
+//10:01 pm est score of 71.43 , partial
+
+var a = [];
+var table = {};
+var fs  = require("fs");
+fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
+if (line != "") {
+a.push(line)
+}
+});
+//console.log(a)
+var n = parseInt(a[0]);
+for(i=1;i<a.length;i++){
+  a[i] = a[i].trim();
+  if(table[i] === undefined){
+    table[i] = a[i].length;
+  }
+}
+//console.log(n)
+var b = [];
+for(property in table){
+  b.push(table[property]);
+}
+b = b.sort().reverse();
+
+var c = [];
+for(i=0;i<b.length;i++){
+  for(property in table){
+    if(table[property] === b[i]){
+      c.push(a[property]);
+    }
+  }
+}
+//console.log(c)
+var count = 0;  
+while(count<n-1){
+console.log(c[count]);
+count++;
 }
