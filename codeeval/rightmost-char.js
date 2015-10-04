@@ -16,9 +16,9 @@ console.log(ans)
 
 //almost there i think. just need to get -1 as an option if there is no match.
 var a = 'Hello CodeEval,z'.split(',')
-var ans = '-1';
+var ans = -1;
 var b = a[0].split('').reverse();
-for(i=a[0].length;i>=0;i--){
+for(i=0;i<a[0].length;i++){
   if(a[i] === a[1]){
     ans = a[0].length - 1 - b.indexOf(a[i]);
   }
