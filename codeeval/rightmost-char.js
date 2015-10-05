@@ -24,3 +24,14 @@ for(i=0;i<a[0].length;i++){
   }
 }
 console.log(ans)
+
+//here we go
+var a = 'Hello CodeEval,z'.split(',')
+var ans = -1;
+var b = a[0].split('').reverse();
+for(i=a[0].length-1;i >= 0;i--){
+  if(a[1] === a[0][i]){
+    ans = a[0].length - 1 - b.indexOf(a[0][i]);
+  }
+}
+console.log(ans)
