@@ -28,7 +28,7 @@ palindrome(line);
     }
 });
 
-//score of 80
+//score of 80...and then 70!?
 //codeeval instructions kinda suck -__-
 
 var fs  = require("fs");
