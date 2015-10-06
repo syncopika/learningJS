@@ -28,7 +28,7 @@ palindrome(line);
     }
 });
 
-//score of 80...and then 70!?
+//score of 80...and then 70!?..now 75!?
 //codeeval instructions kinda suck -__-
 
 var fs  = require("fs");
@@ -47,7 +47,9 @@ for(i=a.length-1;i>=0;i--){
 }
 if(tally === 100){
   //move on
-  console.log('no palindrome')
+  //for 75% accuracy...don't forget to reset tally! (although I thought it would reset to 0 for each new number...)
+  tally = 0;
+  console.log('no palindrome here')
 }
 else{
 if(parseInt(b) === parseInt(a)){
@@ -60,7 +62,6 @@ else{
 }
 }
 }
-
 
  palindrome(line);
     }
