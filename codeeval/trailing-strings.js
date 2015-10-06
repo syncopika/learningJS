@@ -11,8 +11,7 @@ for(i=a[0].length-1;i>=0;i--){
 }
 //console.log(reversed)
 //reverse the second string too
-//I did this because I thought about using substring and indexOf. But indexOf will always just take the first occurence
-//of a character, not the last one, which I want here. 
+//so that we can compare the reversed word/fragment with the back end of the reversed first string
 for(i=a[1].length-1;i>=0;i--){
   revFrag += a[1][i];
 }
