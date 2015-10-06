@@ -100,3 +100,39 @@ else{
 }
 }
 }
+
+//80 again for some reason...
+//it does make sense to declare the function outside first though?
+
+var tally = 0;
+
+function palindrome(number){
+var a = number;
+a = a.toString();
+var b = '';
+for(i=a.length-1;i>=0;i--){
+  b += a[i];
+}
+if(tally === 100){
+  tally = 0;
+  console.log('no palindrome')
+}
+else{
+if(parseInt(b) === parseInt(a)){
+  console.log(tally + ' ' + a);
+  tally = 0;
+}
+else{
+  a = parseInt(a) + parseInt(b);
+  tally++;
+  palindrome(a);
+}
+}
+}
+
+var fs  = require("fs");
+fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
+if (line != "") {
+ palindrome(line);
+    }
+});
