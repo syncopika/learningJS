@@ -1,3 +1,5 @@
+//not sure why it's not fully correct... :<
+
 var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
 if (line != "") {
