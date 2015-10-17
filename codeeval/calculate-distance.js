@@ -17,5 +17,4 @@ var deltaX = parseInt(b[2]) - parseInt(b[0]);
 console.log(Math.sqrt((deltaY*deltaY) + (deltaX*deltaX)));
     }
 });
-    }
-});
+
