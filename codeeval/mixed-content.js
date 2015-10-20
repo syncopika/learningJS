@@ -23,6 +23,17 @@ var d = '';
 b.map(function(word){if(b.indexOf(word) === b.length-1){return d+=word;}else{return d += word + ','}});
 var e = '';
 c.map(function(number){if(c.indexOf(number) === c.length-1){return e+=number;}else{return e += number + ','}});
+
+//sometimes a comma will be at the end of the string 'd'. this helps take off any trailing commas.
+//this boosted my solution from 62.5 to 97.5% lol 
+if(d[d.length-1] === ','){
+   var f = '';
+   for(i=0;i<d.length-1;i++){
+     f+=d[i];
+   }
+  d=f;
+} 
+
 console.log(d + '|' + e);
 }
     }
