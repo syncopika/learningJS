@@ -2,7 +2,7 @@
 
 var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
-if (line != "") {
+    if (line != "") {
 var a = line;
 var a1 = a.split(',');
 var b = [];//store words
@@ -19,6 +19,7 @@ for(i=0;i<a1.length;i++){
     c.push(a1[i]);
   }
 }
+  
 var d = '';
 b.map(function(word){if(b.indexOf(word) === b.length-1){return d+=word;}else{return d += word + ','}});
 var e = '';
@@ -33,7 +34,15 @@ if(d[d.length-1] === ','){
    }
   d=f;
 } 
-
+//modify string e (the number one)  
+if(e[e.length-1] === ','){
+   var g = '';
+   for(i=0;i<e.length-1;i++){
+     g+=e[i];
+   }
+  e=g;
+}   
+  
 console.log(d + '|' + e);
 }
     }
