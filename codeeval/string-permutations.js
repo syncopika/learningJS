@@ -1,6 +1,6 @@
 //did not submit yet. works ok for 3 character strings?? need to solve for longer strings though...
 
-var line = 'hat'
+var line = 'abc' //try 'abcd'
 var lineArray = line.split('');
 var words =[];
 for(i=0;i<lineArray.length;i++){
@@ -15,16 +15,18 @@ for(i=0;i<lineArray.length;i++){
   //console.log(newSeg)
   //newSeg should have all the letters/nums excluding line[i]
   //do the sorting thing now
-   
+
+  //the sort is not working :<
   for(k=0;k<newSeg.length;k++){
-  var newWord = '';
+    var newWord = '';
     for(l=0;l<newSeg.length;l++){
-      if(newSeg[l] > newSeg[k]){
+      if(newSeg[l] < newSeg[k]){
       var temp = newSeg[k];
       newSeg[k] = newSeg[l];
       newSeg[l] = temp;
       }
     }
+    console.log(newSeg)
     newWord += line[i] + newSeg;
     words.push(newWord);
  
@@ -37,6 +39,7 @@ for(i=0;i<lineArray.length;i++){
   }
   //reset lineArray (otherwise the '$' will accumulate)
   lineArray = line.split('')
+  console.log('----')
 }
 console.log(words)
 var list = [];    
@@ -46,3 +49,6 @@ for(i=0;i<words.length;i++){
       }
 }
 console.log(list)
+
+    
+  
