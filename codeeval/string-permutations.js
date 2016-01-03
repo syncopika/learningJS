@@ -19,7 +19,7 @@ for(i=0;i<lineArray.length;i++){
   //the sort is not working :<
   for(k=0;k<newSeg.length;k++){
     var newWord = '';
-    for(l=0;l<newSeg.length;l++){
+    for(l=k;l<newSeg.length;l++){
       if(newSeg[l] < newSeg[k]){
       var temp = newSeg[k];
       newSeg[k] = newSeg[l];
