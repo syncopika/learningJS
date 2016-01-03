@@ -6,37 +6,35 @@ var words =[];
 for(i=0;i<lineArray.length;i++){
   //create new segment excluding line[i]
   lineArray[i] = '$' //substitute line[i] with a placeholder character
-  var newSeg = '';
+  var newSeg = [];
   for(j=0;j<lineArray.length;j++){
     if(lineArray[j] !== '$'){
-      newSeg += lineArray[j];
+      newSeg.push(lineArray[j]);
     }
   }
-  //console.log(newSeg)
+  
   //newSeg should have all the letters/nums excluding line[i]
   //do the sorting thing now
 
-  //the sort is not working :<
   for(k=0;k<newSeg.length;k++){
-    var newWord = '';
-    for(l=k;l<newSeg.length;l++){
-      if(newSeg[l] < newSeg[k]){
-      var temp = newSeg[k];
-      newSeg[k] = newSeg[l];
-      newSeg[l] = temp;
+    for(l=k;l<newSeg.length-k-1;l++){
+      if(newSeg[l] > newSeg[l+1]){
+      var temp = newSeg[l];
+      newSeg[l] = newSeg[l+1];
+      newSeg[l+1] = temp;
       }
+  console.log(newSeg)
+    
     }
-    console.log(newSeg)
-    newWord += line[i] + newSeg;
-    words.push(newWord);
- 
+    
+  
     //now reverse segments and attach to line[i]
-    var newWord2 = line[i];
-    var rev = newSeg.split('');
-    rev = rev.reverse();
-    rev.map(function(a){return newWord2 += a});
+    var rev = newSeg.reverse();
+    rev = rev.join('');
+    var newWord2 = line[i] += rev;
     words.push(newWord2);
   }
+  
   //reset lineArray (otherwise the '$' will accumulate)
   lineArray = line.split('')
   console.log('----')
