@@ -15,25 +15,28 @@ for(i=0;i<lineArray.length;i++){
   
   //newSeg should have all the letters/nums excluding line[i]
   //do the sorting thing now
-
   for(k=0;k<newSeg.length;k++){
-    for(l=k;l<newSeg.length-k-1;l++){
+    for(l=0;l<newSeg.length-k-1;l++){
       if(newSeg[l] > newSeg[l+1]){
       var temp = newSeg[l];
       newSeg[l] = newSeg[l+1];
       newSeg[l+1] = temp;
       }
-  console.log(newSeg)
+    console.log(newSeg)
     
-    }
-    
-  
+    //we don't want to get the final sorted segment. each time a letter shifts (in one interation), we'll take that segment.
+    newSeg2 = newSeg;
+    newSeg1 = newSeg.join(''); 
+    var newWord = line[i] += newSeg1;
+      words.push(newWord);
     //now reverse segments and attach to line[i]
-    var rev = newSeg.reverse();
+    var rev = newSeg2.reverse();
     rev = rev.join('');
     var newWord2 = line[i] += rev;
     words.push(newWord2);
-  }
+    }
+    }
+  
   
   //reset lineArray (otherwise the '$' will accumulate)
   lineArray = line.split('')
@@ -47,6 +50,5 @@ for(i=0;i<words.length;i++){
       }
 }
 console.log(list)
-
     
   
