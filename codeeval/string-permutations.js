@@ -16,6 +16,7 @@ for(i=0;i<lineArray.length;i++){
   //newSeg should have all the letters/nums excluding line[i]
   //do the sorting thing now
   for(k=0;k<newSeg.length;k++){
+     for(l=0;l<newSeg.length-k-1;l++){
       var temp = newSeg[l];
       newSeg[l] = newSeg[l+1];
       newSeg[l+1] = temp;
@@ -32,6 +33,7 @@ for(i=0;i<lineArray.length;i++){
     var newWord2 = line[i] += rev;
     words.push(newWord2);
     }
+  }
   
   //reset lineArray (otherwise the '$' will accumulate)
   lineArray = line.split('')
