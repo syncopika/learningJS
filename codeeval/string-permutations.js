@@ -15,16 +15,25 @@ for(i=0;i<lineArray.length;i++){
   
   //newSeg should have all the letters/nums excluding line[i]
   //do the sorting thing now
-  for(k=0;k<newSeg.length;k++){
+  console.log(newSeg)
+  
+  //but first take care of initial condition
+  var newseg = newSeg.join('');
+  words.push(line[i]+newseg);
+  //remember that reverse permanently changes the array
+  var newsegRev = (newSeg.reverse()).join('');
+  words.push(line[i]+newsegRev);
+ 
+  for(k=0;k<newSeg.length-1;k++){
      for(l=0;l<newSeg.length-k-1;l++){
-      var temp = newSeg[l];
-      newSeg[l] = newSeg[l+1];
-      newSeg[l+1] = temp;
+      var temp = newSeg[k];
+      newSeg[k] = newSeg[k+1];
+      newSeg[k+1] = temp;
 
-    //console.log(newSeg)
+    console.log(newSeg)
     newSeg2 = newSeg;
    
-    newSeg1 = newSeg.join('');
+    var newSeg1 = newSeg.join('');
     var newWord = line[i] += newSeg1;
       words.push(newWord);
     //now reverse segments and attach to line[i]
@@ -37,7 +46,7 @@ for(i=0;i<lineArray.length;i++){
   
   //reset lineArray (otherwise the '$' will accumulate)
   lineArray = line.split('')
-  //console.log('----')
+  console.log('----')
 }
 //console.log(words)
 var list = [];    
@@ -47,5 +56,6 @@ for(i=0;i<words.length;i++){
       }
 }
 console.log(list.sort())
+
     
   
