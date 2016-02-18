@@ -18,12 +18,13 @@ for(i=0;i<a.length;i++){
 }
 console.log(b.reduce(function(a,b){return a+b})) 
 
-//refined
+
+//refined - solved!
 var a = '9f'
 var b = [];
 var hexLetters = {'a':10, 'b':11, 'c':12, 'd':13, 'e':14, 'f':15};
 a = a.split('').reverse();
-console.log('f' >= 0)
+//console.log('f' >= 0)
 for(i=0;i<a.length;i++){
      //if a[i] is NOT a number but a letter
      //also account for 0 being a possible number!
