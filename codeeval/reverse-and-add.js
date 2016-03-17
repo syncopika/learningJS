@@ -115,7 +115,7 @@ for(i=a.length-1;i>=0;i--){
 }
 if(tally === 100){
   tally = 0;
-  console.log('no palindrome')
+  console.log('no palindrome') //should be just => return;
 }
 else{
 if(parseInt(b) === parseInt(a)){
@@ -136,3 +136,5 @@ if (line != "") {
  palindrome(line);
     }
 });
+
+//03-17-16 haha finally got it....instead of console.log('no palindrome'), a return statement is sufficient. duh. >_<
