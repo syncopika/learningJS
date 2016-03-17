@@ -29,7 +29,6 @@ palindrome(line);
 });
 
 //score of 80...and then 70!?..now 75!?
-//codeeval instructions kinda suck -__-
 
 var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
