@@ -1,4 +1,7 @@
 //another partial solution! grrr....
+//3-17-16 check out this string => 'AoB!bC#c@c$$$'
+//and then check out the resulting table: {A: 1, O: 1, B: 2, C: 3}
+//the letters aren't sorted properly!! :O
 
 var fs  = require("fs");
 fs.readFileSync(process.argv[2]).toString().split('\n').forEach(function (line) {
