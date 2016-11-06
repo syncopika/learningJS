@@ -2,10 +2,6 @@
 //rememebr that a STACK is FILO
 //that is, "first in, last out"
 
-//when removing elements, is it okay to just replace with 0? 
-//if I wanted to resize the array, I think it would cause the pop()
-//operation to be O(n) then, I think, which kinda defeats the
-//advantage of the pop function being O(1). 
 //this is interesting: http://stackoverflow.com/questions/22614237/javascript-runtime-complexity-of-array-functions
 
 //also note: in other languages like Java, the arrays are not as flexible as in Javascript.
