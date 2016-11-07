@@ -14,7 +14,7 @@
 *	
 *          an example of an incomplete tree:
 *
-*	           (3)
+*		  		   (3)
 *                 /   \
 *               (4)    (5)
 *               / \      \
@@ -53,7 +53,7 @@ function Heap(){
 			//in Java, division automatically uses floor I think. 
 			var parentPos = Math.floor((pos-1)/2);
 			if(theHeap[pos] < theHeap[parentPos]){
-				swap(theHeap[pos], theHeap[parentPos]);
+				swap(pos, parentPos);
 			}
 		}
 	}
@@ -68,6 +68,16 @@ function Heap(){
 		//then remove the last element (slice does not modify the original array) 
 		theHeap = theHeap.slice(0, theHeap.length - 1);
 		//now rearrange the heap
+		
+		//need to consider the case when there are only two elements left!! can't enter the 
+		//for-loop with this condition.
+		if(theHeap.length == 2){
+			if(theHeap[1] < theHeap[0]){
+				swap(1, 0);
+			}
+		}
+		
+		
 		//this time we "bubble down" since we have the largest element at the root
 		//we're checking if (2*i+2) is less than the heap.length because we're going
 		//to check if the node-to-be-bubbled-down is less than or greater than the
@@ -80,17 +90,17 @@ function Heap(){
 			
 			//first find the smallest of the two children
 			//that way we know which way to bubble down
-			var smallestChild;
+			var smallestChildIndex;
 			if(theHeap[pos*2 + 2] > theHeap[pos*2 + 1]){
 				//if the right > eft, the left is the smallest child
-				smallestChild = theHeap[pos*2 + 1];
+				smallestChildIndex = pos*2 + 1;
 			}else{
-				smallestChild = theHeap[pos*2 + 2];
+				smallestChildIndex = pos*2 + 2;
 			}
 			
 			//then compare our current node at "pos" with the smallest child
-			if(theHeap[pos] > smallestChild){
-				swap(theHeap[pos], smallestChild);
+			if(theHeap[pos] > theHeap[smallestChildIndex]){
+				swap(pos, smallestChildIndex);
 			}
 		}
 		
@@ -100,11 +110,13 @@ function Heap(){
 		return theHeap;
 	}
 	
-	function swap(data1, data2){
-		data1Location = theHeap.indexOf(data1);
-		data2Location = theHeap.indexOf(data2);
-		theHeap[data1Location] = data2;
-		theHeap[data2Location] = data1;
+	//don't use indexOf so duplicates can be allowed
+	//the two parameters are supposed to be integers corresponding to index
+	function swap(data1index, data2index){
+		data1 = theHeap[data1index];
+		data2 = theHeap[data2index];
+		theHeap[data1index] = data2;
+		theHeap[data2index] = data1;
 	}
 }
 
@@ -121,8 +133,8 @@ console.log(heap1.print()); //should get [1 2 6 3]
 
 /*****************
 *
-*	  (1)
-* 	 /   \
+*        (1)
+* 		/   \
 *      (2)  (6)
 *      /
 *    (3)
@@ -136,8 +148,8 @@ heap1.add(5);
 /*****************
 *should look like this now:
 *
-*	  (1)
-* 	 /   \
+*		  (1)
+* 		 /   \
 *      (2)   (5)
 *      / \    /
 *    (3) (4) (6)
@@ -152,8 +164,8 @@ heap1.remove();
 /*****************
 *should look like this now:
 *
-*	 (2)
-*       /   \
+*	  	  (2)
+* 		 /   \
 *      (3)   (5)
 *      / \    
 *    (6) (4) 
@@ -162,3 +174,35 @@ heap1.remove();
 *//////////////////
 
 console.log(heap1.print()); //should get [2 3 5 6 4]
+
+
+var heap2 = new Heap();
+heap2.add(5);
+heap2.add(3);
+heap2.add(6);
+console.log(heap2.print()); //[3, 5, 6]
+/*************
+*
+*     (3)
+*    /   \
+*   (5)  (6)
+*
+*/
+
+heap2.remove();
+
+/*************
+*
+*     (5)
+*        \
+*        (6)
+*
+*/
+console.log(heap2.print()); //[5, 6]
+
+
+
+
+
+
+
