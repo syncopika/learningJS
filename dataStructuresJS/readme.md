@@ -1,5 +1,7 @@
 #data structures using Javascript    
-    
+
+you can run these with node.js! after installing node, just open up the command-line, make sure you're in the directory with the right .js file (i.e. linkedlist.js), and then type in "node [filename].js" in the command-line (where [filename] is like linkedlist, or stack, etc).
+
 ##1. linked list
     a linked list has nodes and each node points to another one. 
     
