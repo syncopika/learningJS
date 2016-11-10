@@ -100,11 +100,19 @@ function BST(){
 			return; //if a dead end is reached and nothing found
 		}
 		
-		//if there is only one node (i.e. the root)
-		if(data === root.data){
-			map.splice(counter, 1);
-			root = null;
-			return;
+		//if you want to remove the root
+		if(node === root && data === root.data){
+			if(getMax(node.left) !== null){
+				//console.log("maximum value: " + getMax(node.left));
+				node.data = getMax(node.left);
+				return removeHelper(node.data, node.left);
+			}else{
+				//like above, but replacing with the MIN on the RIGHT SUBTREE
+				if(getMin(node.right) !== null){
+					node.data = getMin(node.right);
+					return removeHelper(node.data, node.right);
+				}
+			}
 		}
 		
 		if(node.left !== null && data === node.left.data){
@@ -116,7 +124,7 @@ function BST(){
 					//if the node isn't a leaf!
 					//find the MAX VALUE from the left subtree
 					//and replace the current node's left child's VALUE with it (not the node object itself)
-					console.log("maximum value: " + getMax(node.left.left));
+					//console.log("maximum value: " + getMax(node.left.left));
 					if(getMax(node.left.left) !== null){
 						node.left.data = getMax(node.left.left);
 						//start the recursion over again at the current node's left child 
@@ -154,11 +162,9 @@ function BST(){
 				}
 		}else if(data > node.data){
 			//go right
-			counter++;
 			return removeHelper(data, node.right);
 		}else{
 			//otherwise go left
-			counter++;
 			return removeHelper(data, node.left);
 		}
 	}
@@ -223,17 +229,15 @@ bst.add(4);
 console.log(bst.toString());
 console.log(bst.getSize());
 
-/*
 console.log("---------------------------");
 bst.remove(4);
-console.log(bst.getMap());
+console.log(bst.toString());
 console.log(bst.getSize());
 
 console.log("---------------------------");
 bst.add(1);
-console.log(bst.getMap());
+console.log(bst.toString());
 console.log(bst.getSize());
-*/
 
 console.log("---------------------------");
 var bst2 = new BST();
@@ -242,12 +246,53 @@ bst2.add(3);
 bst2.add(6);
 bst2.add(4);
 bst2.add(2);
+
+
+/****
+*
+*             (5)
+*            /   \
+*           (3)  (6)
+*           / \
+*         (2) (4)
+*
+*
+*/
+
 console.log(bst2.toString());
 
 console.log("---------------------------");
 bst2.remove(3);
 console.log(bst2.toString());
-console.log(bst2.getSize());
+console.log("size after removing 3: " + bst2.getSize());
+console.log("---------------------------");
+/****
+* should look like:
+*
+*             (5)
+*            /   \
+*           (2)  (6)
+*             \
+*             (4)
+*
+*
+*/
+
+bst2.remove(5);
+
+/****
+* should look like:
+*
+*             (4)
+*            /   \
+*           (2)  (6)
+*             
+*             
+*
+*
+*/
+console.log(bst2.toString());
+console.log("size after removing 5: " + bst2.getSize());
 
 
 
