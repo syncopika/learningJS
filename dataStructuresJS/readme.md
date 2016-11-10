@@ -2,7 +2,9 @@
 
 you can run these with node.js! after installing node, just open up the command-line, make sure you're in the directory with the right .js file (i.e. linkedlist.js), and then type in "node [filename].js" in the command-line (where [filename] is like linkedlist, or stack, etc).
     
-additionally, I think these are mostly functional, but not completely bug-free currently. they should satisfy most general cases at least though I think.
+additionally, I think these are mostly functional, but not completely bug-free currently. they should satisfy most general cases at least though I think.    
+
+since I'm learning about data structures right now, I thought it would be fun to implement these.
 
 ##1. linked list
     a linked list has nodes and each node points to another one. 
