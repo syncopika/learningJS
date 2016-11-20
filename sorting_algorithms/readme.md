@@ -4,7 +4,7 @@ sorting algorithms
 Each element (let's call it 'a') in the data set is checked against every other element in the set (let's call them 'b'), such that if 'a' is less than 'b' (this is for getting ascending order), 'a' is swapped with 'b'. Another way is to loop through the data set, and for each data element, loop through the data set again and for each element, check if the next element ahead is smaller. If so, swap. This sorting algorithm has a worst-case runtime of O(n^2).    
 
 2. <b>selection sort</b>    
-Each element is compared to every element to its right and the swap only occurs with the SMALLEST element available to the right of the current element selected. THis requires a nested for-loop again, and each loop's runtime is dependent on the size of the data, so worst-case runtime is O(n^2). 
+Each element is compared to every element to its right and the swap only occurs with the SMALLEST element available to the right of the current element selected. This requires a nested for-loop like bubblesort, and each loop's runtime is dependent on the size of the data, so worst-case runtime is O(n^2). 
 
 3. <b>merge sort </b>   
 A helper merge function takes two already sorted arrays (this is an important detail!) and puts their elements in order in a new array. 
