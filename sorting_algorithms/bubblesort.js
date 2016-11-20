@@ -30,5 +30,19 @@ function bubbleSort(data){
  return data;
 }
 
+//another way to bubble up
+function bubble(data){	
+	for(var i = 0 ; i < data.length; i++){
+		for(var j = 0; j < data.length; j++){
+			if(data[i] < data[j]){
+				var temp = data[j];
+				data[j] = data[i];
+				data[i] = temp;
+			}
+		}
+	}
+	return data;
+}
+
 //test
 console.log(bubbleSort([4,7,6,8,9,2,1,43]))
