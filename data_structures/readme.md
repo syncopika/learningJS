@@ -31,3 +31,8 @@ since I'm learning about data structures right now, I thought it would be fun to
     drawbacks: 
     
 ##5. binary search tree (in progress)
+
+##6. weighted graph    
+    a graph is a set of vertices. since this one is weighted, it means that for any connection between two vertices, there is a weight (positive integer) associated with that connection (also called an 'edge').    
+        
+    benefits: good for finding paths. shortest-path using Dijkstra's Algorithm.
