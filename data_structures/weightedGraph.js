@@ -67,9 +67,8 @@ function WeightedGraph(){
 		var finishedSet = {};
 		
 		//start at vertex a
-		//set cost[a] = 0
+		//by setting cost[a] = 0
 		cost[a] = 0;
-		//var currVertex = a;
 		
 		while(!equals(finishedSet, vertexSet)){
 			
