@@ -17,6 +17,7 @@ function capture(data) {
         }
     }
     
+    //while all entries in 'time' are not 0...
     while(time.reduce(function(a,b){return a+b}) !== 0){
         
         var curLength = nodes.length; //record length of current node list
