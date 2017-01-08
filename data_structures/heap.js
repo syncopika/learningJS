@@ -22,7 +22,7 @@
 *           *there is no left child for 5! incomplete!   
 */
 // 2. All child nodes must be larger than the parent! (for a min-heap). A max-heap is the opposite,
-//    in that all children are larger. 		
+//    in that all children are smaller. 		
 //
 // A heap is much easier to manage by using an array as the underlying data structure!
 // Additionally, a heap typically has two main functions - getSmallest(), which gets the smallest node, which is the root,
