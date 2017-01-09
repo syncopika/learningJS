@@ -13,6 +13,7 @@
 
 function BST(){
 	
+	//root is a Node object
 	var root = null;
 	
 	/*** toString method ***/
@@ -57,8 +58,7 @@ function BST(){
 	function addHelper(newData, node){
 		
 			if(newData < node.data){
-				//if the new data is less than the current node's data, go left
-				
+				//if the new data is less than the current node's data, go left			
 				//is the left child of the next node null?? if it is, place the new data there
 				if(node.left === null){
 					var newNode = new Node(newData);
@@ -66,13 +66,11 @@ function BST(){
 					
 					return;
 				}
-				
 				//otherwise keep looking left
 				return addHelper(newData, node.left);
 				
 			}else if(newData > node.data){
 				//if the new data is greater than the current node's data, go right
-				
 				//is the right child of the next node null? if so, put the new data there
 				if(node.right === null){
 					var newNode = new Node(newData);
@@ -102,6 +100,11 @@ function BST(){
 		
 		//if you want to remove the root
 		if(node === root && data === root.data){
+			
+			if(isLeaf(node)){
+				root = null;
+				return;
+			}
 			if(getMax(node.left) !== null){
 				//console.log("maximum value: " + getMax(node.left));
 				node.data = getMax(node.left);
@@ -201,9 +204,28 @@ function BST(){
 	}
 	
 	
-	//search
+	//search - returns true if data is in tree, false if not
+	//target should be the data value to look for
 	this.search = function(target){
-		
+		return searchHelper(root, target);
+	}
+	
+	function searchHelper(node, target){
+			
+		if(node === null){
+			return false;
+		}
+		if(target === node.data){
+			return true;
+		}	
+		//if tree > 1 node, figure which direction to go
+		if(target < node.data){
+			//look left
+			return searchHelper(node.left, target);
+		}else if(target > node.data){
+			//look right
+			return searchHelper(node.right, target);
+		}
 	}
 
 }
@@ -294,13 +316,29 @@ bst2.remove(5);
 console.log(bst2.toString());
 console.log("size after removing 5: " + bst2.getSize());
 
+console.log("---------------------------");
+var bst3 = new BST();
+bst3.add(1);
+bst3.remove(1);
+console.log(bst3.toString());
 
 
+console.log("---------------------------");
 
-
-
-
-
-
-
+var tree = new BST();
+tree.add(5);
+tree.add(3);
+tree.add(7);
+tree.add(8);
+tree.add(10);
+tree.add(4);
+tree.add(2);
+//tree.add(9);
+		
+console.log(tree.toString());
+console.log("-----------");
+tree.remove(100); //should be false
+console.log(tree.search(20));
+console.log(tree.toString());
+console.log("-----------");
 
