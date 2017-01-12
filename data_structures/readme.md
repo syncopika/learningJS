@@ -30,7 +30,12 @@ since I'm learning about data structures right now, I thought it would be fun to
     benefits: useful for getting the smallest or largest element, can be used for sorting (HeapSort)
     drawbacks: 
     
-##5. binary search tree (in progress)
+##5. binary search tree    
+    a binary tree in which each node's left subtree nodes are smaller than that node's value, 
+    and each node's right subtree is larger. also, each node's value should be comparable.    
+        
+    useful for sorting (i.e. treesort), because the tree can be traversed in-order 
+    (left node, parent node, right node) to produce the nodes in sorted order.
 
 ##6. weighted graph    
     a graph is a set of vertices. since this one is weighted, it means that for any connection between two vertices, there is a weight (positive integer) associated with that connection (also called an 'edge').    
