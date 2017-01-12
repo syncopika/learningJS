@@ -87,82 +87,56 @@ function BST(){
 	
 	//remove function
 	this.remove = function(data){
-		var counter = 0;
 		return removeHelper(data, root);
-		
+	}
 		
 	//this helper is encapsulated within the remove function
 	function removeHelper(data, node){
-		//base case
+		//base cases
 		if(node === null){
-			return; //if a dead end is reached and nothing found
+			return;
 		}
-		
-		//if you want to remove the root
+		if(node.left !== null && node.left.data === data && isLeaf(node.left)){
+			node.left = null;
+			return;
+		}
+		if(node.right !== null && node.right.data === data && isLeaf(node.right)){
+			node.right = null;
+			return;
+		}
+		//if you want to remove the root and only 1 node
 		if(node === root && data === root.data){
-			
 			if(isLeaf(node)){
 				root = null;
 				return;
 			}
+		}
+		//data to remove is an inner node. or root with at least 1 child 
+		if(data === node.data){
+			//find the MAX VALUE from the left subtree
+			//and replace the current node's left child's VALUE with it (not the node object itself)
+			//console.log("maximum value: " + getMax(node.left.left));
 			if(getMax(node.left) !== null){
-				//console.log("maximum value: " + getMax(node.left));
 				node.data = getMax(node.left);
-				return removeHelper(node.data, node.left);
+				//start the recursion over again at the current node's left child (only if current node data is not the same as the left child's)
+				//this is like a swapping process that continues until all the left children have moved up one	
+				//use the new, replaced DATA VALUE as the one to DELETE. this forces the swapping until a leaf is reached
+				if(node.data === node.left.data){
+					return removeHelper(node.data, node);
+				}else{
+					return removeHelper(node.data, node.left);
+				}
 			}else{
 				//like above, but replacing with the MIN on the RIGHT SUBTREE
 				if(getMin(node.right) !== null){
 					node.data = getMin(node.right);
-					return removeHelper(node.data, node.right);
-				}
-			}
-		}
-		
-		if(node.left !== null && data === node.left.data){
-				//is the node a leaf???
-				if(isLeaf(node.left)){
-					node.left = null; //make that node null
-					return;
-				}else{
-					//if the node isn't a leaf!
-					//find the MAX VALUE from the left subtree
-					//and replace the current node's left child's VALUE with it (not the node object itself)
-					//console.log("maximum value: " + getMax(node.left.left));
-					if(getMax(node.left.left) !== null){
-						node.left.data = getMax(node.left.left);
-						//start the recursion over again at the current node's left child 
-						//this is like a swapping process that continues until all the left children have moved up one	
-						//use the new, replaced DATA VALUE as the one to DELETE. this forces the swapping until a leaf is reached
-						return removeHelper(node.left.data, node.left);
+					if(node.right.data === node.data){
+						return removeHelper(node.data, node);
 					}else{
-						//like above, but replacing with the MIN on the RIGHT SUBTREE
-						if(getMin(node.right.right) !== null){
-							node.right.data = getMin(node.right.right);
-							return removeHelper(node.right.data, node.right);
-						}
-					}
-				}	
-		}else if(node.right !== null && data === node.right.data){
-			//is the node a leaf???
-			if(isLeaf(node.right)){
-				node.right = null; //make that node null
-				return;
-			}else{
-					//if the node isn't a leaf!
-					//find the MAX VALUE from the left subtree
-					//and replace the current node's left child's VALUE with it (not the node object itself)
-					if(getMax(node.left.left) !== null){
-						node.left.data = getMax(node.left.left);
-						//start the recursion over again at the current node's left child 
-						//this is like a swapping process that continues until all the left children have moved up one
-						return removeHelper(node.left.data, node.left);
-					}else{
-						if(getMin(node.right.right) !== null){
-							node.right.data = getMin(node.right.right);
-							return removeHelper(node.right.data, node.right);
-						}
+						return removeHelper(node.data, node.right);
 					}
 				}
+			}	
 		}else if(data > node.data){
 			//go right
 			return removeHelper(data, node.right);
@@ -170,7 +144,6 @@ function BST(){
 			//otherwise go left
 			return removeHelper(data, node.left);
 		}
-	}
 	}
 	
 	//check if a node is a leef
@@ -299,8 +272,7 @@ console.log("---------------------------");
 *
 *
 */
-
-bst2.remove(5);
+bst2.remove(5); 
 
 /****
 * should look like:
@@ -341,4 +313,8 @@ tree.remove(100); //should be false
 console.log(tree.search(20));
 console.log(tree.toString());
 console.log("-----------");
+
+
+
+
 
