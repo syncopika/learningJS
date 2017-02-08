@@ -45,6 +45,7 @@ function solve(a){
   substr = "(" + substr + ")"
   var c = a.substring(0, a.lastIndexOf(substr)) + a.substring(a.lastIndexOf(substr)).replace(substr, result);
   console.log(c)
-  return get(c);
+  return solve(c);
 }
+
 console.log(solve(a))
