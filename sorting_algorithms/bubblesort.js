@@ -30,7 +30,10 @@ function bubbleSort(data){
  return data;
 }
 
-//another way to bubble up
+//I'm not sure if this is actually considered bubble sort since every data element
+//is being checked against every other element, making it feel like the absolute worst
+//possible way to sort something lol. but I think I read it somewhere and it's the
+//first sorting method I ever saw. somehow this works.
 function bubble(data){	
 	for(var i = 0 ; i < data.length; i++){
 		for(var j = 0; j < data.length; j++){
