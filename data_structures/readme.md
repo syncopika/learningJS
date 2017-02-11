@@ -1,6 +1,6 @@
 #data structures using Javascript    
 
-you can run these with node.js! after installing node, just open up the command-line, make sure you're in the directory with the right .js file (i.e. linkedlist.js), and then type in "node [filename].js" in the command-line (where [filename] is like linkedlist, or stack, etc).
+you can run these with node.js! after installing node, just open up the command-line, make sure you're in the directory with the right .js file (i.e. linkedlist.js), and then type in "node [filename]" in the command-line (where [filename] is like linkedlist, or stack, etc).
     
 additionally, I think these are mostly functional, but not completely bug-free currently. they should satisfy most general cases at least though I think.    
 
@@ -35,7 +35,11 @@ since I'm learning about data structures right now, I thought it would be fun to
     and each node's right subtree is larger. also, each node's value should be comparable.    
         
     useful for sorting (i.e. treesort), because the tree can be traversed in-order 
-    (left node, parent node, right node) to produce the nodes in sorted order.
+    (left node, parent node, right node) to produce the nodes in sorted order.    
+    
+    this one has a printTree function, which displays the tree in a nice, graphical way! 
+    however, I've only tested up to trees with a depth of 3 (3 rows), and it looks kinda bad for degenerate trees. 
+    But it's cool!
 
 ##6. weighted graph    
     a graph is a set of vertices. since this one is weighted, it means that for any connection between two vertices, there is a weight (positive integer) associated with that connection (also called an 'edge').    
