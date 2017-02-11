@@ -121,7 +121,8 @@ function BST(){
 				//start the recursion over again at the current node's left child
 				//(but only if current node data is not the same as the left child's)
 				//this is like a swapping process that continues until all the left children have moved up one	
-				//use the new, replaced DATA VALUE as the one to DELETE. this forces the swapping until a leaf is reached
+				//use the new, replaced DATA VALUE as the one to DELETE. 
+				//this forces the swapping until a leaf is reached
 				if(node.data === node.left.data && isLeaf(node.left)){
 					return removeHelper(node.data, node);
 				}else{
@@ -147,7 +148,7 @@ function BST(){
 		}
 	}
 	
-	//check if a node is a leef
+	//check if a node is a leaf
 	function isLeaf(node){
 		if(node === null){
 			return false;
@@ -209,7 +210,138 @@ function BST(){
 			return searchHelper(node.right, target);
 		}
 	}
+	
+	// get the depth of the tree
+	this.getDepth = function(){
+		return getDepthHelper(root);
+	}
 
+	function getDepthHelper(node){
+		if(node === null){
+			return 0;
+		}
+		if(node.left === null && node.right === null){
+			return 1;
+		}
+		return Math.max(1 + getDepthHelper(node.left), 1 + getDepthHelper(node.right));
+	}
+	
+	//print tree in graphical form
+	this.printTree = function(){
+		
+		//use a queue to traverse breadth-first!
+		var queue = [];
+		var nodes = [];
+		
+		queue.push(root);
+		
+		while(queue.length > 0){
+			
+			var curr = queue.shift();
+			
+			nodes.push(curr);
+			
+			if(curr.left !== null && curr.right !== null){
+				queue.push(curr.left);
+				queue.push(curr.right);
+			}else if(curr.left !== null){
+				queue.push(curr.left);
+			}else if(curr.right !== null){
+				queue.push(curr.right);
+			}
+		}
+		
+		//show nodes
+		console.log(nodes);
+		
+		//depth includes the connecting lines between nodes
+		var depth = this.getDepth() + (this.getDepth()-1);
+		var rows = this.getDepth();
+		var height = depth;
+		var width = Math.pow(2, rows-1) + (Math.pow(2, rows-1) / 2)*3 + ((Math.pow(2, rows-1) / 2) - 1);
+		var currRow = 0;
+		
+		var table = [];
+		for(var i = 0; i < height; i++){
+			var line = [];
+			for(var j = 0; j < width; j++){
+				line.push(" ");
+			}
+			table.push(line);
+		}
+		
+		/* set up tree */
+		var rowNodeCounter = 0;
+		var rowStop = 0;
+		var numChildren = 0;
+		//distance between a number and the connecting line to next node
+		var distance = this.getDepth() - 1; 
+
+		for(var i = 0; i < nodes.length; i++){
+			//every node is an object, with left and right properties!	
+			if(nodes[i].left === null && nodes[i].right === null){
+				rowNodeCounter++; //even if we skip a node, we need to count it!
+				continue;
+			}
+			
+			if(i === 0){
+				var index = Math.floor(width / 2);
+				table[currRow][Math.floor(width / 2)] = nodes[i].data;
+				
+				if(nodes[i].left !== null){
+					table[currRow + 1][index - distance] = '/';
+					table[currRow + 2][index - (distance+1)] = nodes[i].left.data;
+					
+					//figure out how many children in next row
+					rowStop += 1;
+				}
+				if(nodes[i].right !== null){
+					table[currRow + 1][index + distance] = '\\';
+					table[currRow + 2][index + (distance+1)] = nodes[i].right.data;
+					
+					//figure out how many children in next row
+					rowStop += 1;
+				}
+				
+				currRow += 2;
+				--distance;
+			}else{
+					
+				//move up in rows after nodes for one row completed
+				if(rowNodeCounter === rowStop){
+					rowStop = numChildren;
+					rowNodeCounter = 0;
+					currRow += 2;
+					--distance;
+				}
+				
+				var index = table[currRow].indexOf(nodes[i].data);
+			
+				//temp fix
+				if(index === -1){
+					break;
+				}
+				
+				//make sure to account for this node in the row
+				rowNodeCounter++;
+				
+				if(nodes[i].left !== null){
+					table[currRow + 1][index - distance] = '/';
+					table[currRow + 2][index - (distance+1)] = nodes[i].left.data;
+					numChildren++; //calculate how many children in next row 
+				}
+				if(nodes[i].right !== null){
+					table[currRow + 1][index + distance] = '\\';
+					table[currRow + 2][index + (distance+1)] = nodes[i].right.data;
+					numChildren++;
+				}
+			}
+		}		
+		/* display everything */
+		for(var i = 0; i < table.length; i++){
+			console.log(table[i].join(""));
+		}
+	}
 }
 
 //node object 
@@ -222,14 +354,81 @@ function Node(data){
 
 
 //////// TESTING
+
 var bst = new BST();
 bst.add(5);
 bst.add(3);
 bst.add(6);
 bst.add(4);
 
-console.log(bst.toString());
-console.log(bst.getSize());
+bst.printTree();
+
+
+var bst1 = new BST();
+bst1.add(5);
+bst1.add(3);
+bst1.add(2);
+bst1.add(1);
+bst1.printTree();
+
+
+var bst2 = new BST();
+bst2.add(2);
+bst2.add(1);
+bst2.add(4);
+bst2.add(3);
+bst2.add(5);
+
+bst2.printTree();
+//console.log(bst2.toString());
+
+
+var bst3 = new BST();
+bst3.add(4);
+bst3.add(3);
+bst3.add(5);
+bst3.add(1);
+bst3.add(2);
+
+bst3.printTree();
+//console.log(bst3.toString());
+
+
+var bst4 = new BST();
+bst4.add(5);
+bst4.add(4);
+bst4.add(7);
+bst4.add(1);
+bst4.add(10);
+
+bst4.printTree();
+//console.log(bst4.toString());
+
+
+var bst5 = new BST();
+bst5.add(1);
+bst5.add(2);
+bst5.add(3);
+bst5.add(4);
+bst5.add(5);
+
+bst5.printTree();
+//console.log(bst5.toString())
+
+
+var bst6 = new BST();
+bst6.add(6);
+bst6.add(4);
+bst6.add(8);
+bst6.add(2);
+bst6.add(5);
+bst6.add(7);
+bst6.add(10);
+
+bst6.printTree();
+//console.log(bst5.toString())
+
+/*
 
 console.log("---------------------------");
 bst.remove(4);
@@ -249,6 +448,7 @@ bst2.add(6);
 bst2.add(4);
 bst2.add(2);
 
+*/
 
 /****
 *
@@ -259,7 +459,6 @@ bst2.add(2);
 *         (2) (4)
 *
 *
-*/
 
 console.log(bst2.toString());
 
@@ -268,6 +467,11 @@ bst2.remove(3);
 console.log(bst2.toString());
 console.log("size after removing 3: " + bst2.getSize());
 console.log("---------------------------");
+
+
+
+
+
 /****
 * should look like:
 *
@@ -277,9 +481,8 @@ console.log("---------------------------");
 *             \
 *             (4)
 *
-*
+*	bst2.remove(5); 
 */
-bst2.remove(5); 
 
 /****
 * should look like:
@@ -290,8 +493,7 @@ bst2.remove(5);
 *             
 *             
 *
-*
-*/
+
 console.log(bst2.toString());
 console.log("size after removing 5: " + bst2.getSize());
 
@@ -321,18 +523,25 @@ console.log(tree.search(20));
 console.log(tree.toString());
 console.log("-----------");
 
+
+*
+*/
+
+
 //degenerate tree
 /*
-  (1)
-    \
-     (2)
-       \
-        (3)
-          \
-           (4)
-	     \
-             (5)
-*/
+     (1)
+        \
+	 (2)
+	   \
+	    (3)
+	       \
+         	(4)
+		  \
+	      	  (5)
+		  
+		  
+		  
 var bst4 = new BST();
 bst4.add(1);
 bst4.add(2);
@@ -343,5 +552,12 @@ bst4.add(5);
 console.log(bst4.toString());
 bst4.remove(4);
 console.log(bst4.toString());
+		  
+		  
+		  
+		  
+*/
+
+
 
 
