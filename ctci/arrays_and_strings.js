@@ -102,6 +102,7 @@ function checkPerm(a, b){
 console.log("1.2 TESTS ==============================");
 console.log("aaabbb and ababab are permutations: " + checkPerm('aaabbb', 'ababab')); // true
 console.log("aaabbb and abbab are permutations: " + checkPerm('aaabbb', 'abbab')); // false
+console.log("abcd and abca are permutations: " + checkPerm('abcd', 'abca')); // false
 console.log("aaacbb and ababab are permutations: " + checkPerm('aaacbb', 'ababab')); // false
 console.log("abcdefg and dfgecba are permutations: " + checkPerm('dfgecba', 'abcdefg')); // true
 console.log("123abc and 124cba are permutations: " + checkPerm('123abc', '124cba')); // false
@@ -210,32 +211,70 @@ function oneAway(a, b){
 	// this means one string will have 1 different char from other string 
 	// is this part O(N^2)?
 	if(a.length === b.length){
-		var count = 0; // keep track of different chars 
+		var count1 = 0; // keep track of different chars 
+		var count2 = 0;
+		
+		// check b against a
 		for(var i = 0; i < a.length; i++){
 			if(b.indexOf(a[i]) < 0){
 				count++;
 			}
 		}
-		return (count <= 1); // if count is just 1 or 0, then the strings are one away 
+		
+		// check a against b 
+		for(var i = 0; i < b.length; i++){
+			if(a.indexOf(b[i]) < 0){
+				count2++;
+			}
+		}
+		return (count1 <= 1) && (count2 <= 1); // if count is just 1 or 0, then the strings are one away 
 	}
 	
 	// if different lengths, need to check that only one char is different between the two strings  
-	// get the larger string
-	var larger = (a.length > b.length) ? a : b;
+	// hash each string, find the larger one, and compare with the smaller one
+	var hash1 = hashString(a, 1);
+	var hash2 = hashString(b, 1);
 	var count = 0;
-	for(var i = 0; i < larger.length; i++){
-		if(b.indexOf(larger[i]) < 0){
+	
+	var largerHash = (Object.keys(hash1).length > Object.keys(hash2).length) ? hash1 : hash2;
+	var smallerHash = (largerHash == hash1) ? hash2 : hash1;
+	
+	for(character in largerHash){
+		
+		if(smallerHash[character] === undefined){
+			count++;
+		}
+		
+		// if the difference in occurrences of a char > 0, (i.e. one str has 2 a's and the other has 1.)
+		// increment count as well 
+		if(Math.abs(largerHash[character] - smallerHash[character]) > 0){
 			count++;
 		}
 	}
-	
 	return (count <= 1); // we want a difference of only 1 char 
+}
+
+// helper function to hash a string 
+function hashString(input, counter){
+	
+	var hash = {};
+	
+	for(var i = 0; i < input.length; i++){
+		if(hash[input[i]] >= 0){
+			hash[input[i]]++;
+		}else{
+			hash[input[i]] = counter;
+		}
+	}
+	return hash;
 }
 
 // 1.5 tests
 console.log("1.5 TESTS ==============================");
 console.log("aaabbb and ababab are one away: " + oneAway('aaabbb', 'ababab')); // true
 console.log("aaabbb and ababad are one away: " + oneAway('aaabbb', 'ababad')); // true
+console.log("aaa and abc are one away: " + oneAway('aaa', 'abc')); // false
+console.log("abaa and abc are one away: " + oneAway('abaa', 'abc')); // false
 console.log("aaabbb and abbab are one away: " + oneAway('aaabbb', 'abbab')); // true
 console.log("aba and ab are one away: " + oneAway('aba', 'ab')); // true
 console.log("abcdef and abcd are one away: " + oneAway('abcdef', 'abcd')); // false
@@ -244,13 +283,44 @@ console.log("----------------------------------------\n");
 
 
 // 1.6 string compression
-// remove duplicates of letteers in str 
+// remove duplicates of letters in str
+// include count of characters, i.e. aabcccccaaa -> a2b1c5a3
+
 function compress(input){
+	
+	var newStr = "";
+	var currChar = input[0];
+	var count = 0;
+	
+	for(var i = 0; i < input.length; i++){
+		
+		if(input[i] === currChar){
+			count++;
+		}else{
+			
+			newStr += currChar;
+			newStr += count;
+			
+			// reset currChar and count
+			count = 1;
+			currChar = input[i];	
+		}
+		
+		// for strings with all the same char or the last bit of chars that are all the same in a string
+		if(i === input.length - 1){
+			newStr += currChar + count;
+		}
+		
+	}
+	return newStr;
+}
+
+// this one only compresses the string
+function compress2(input){
 	
 	var str = '';
 	
 	for(var i = 0; i < input.length; i++){
-		
 		if(i === input.length - 1){
 			str += input[i];
 		}else if(input[i] === input[i+1]){
@@ -259,7 +329,6 @@ function compress(input){
 			str += input[i];
 		}
 	}
-	
 	return str;
 }
 
