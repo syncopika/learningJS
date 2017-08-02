@@ -207,78 +207,64 @@ function oneAway(a, b){
 		return false;
 	}
 	
-	// if the strings are the same length, just need to check for 1 replacement .
-	// this means one string will have 1 different char from other string 
-	// is this part O(N^2)?
 	if(a.length === b.length){
-		var count1 = 0; // keep track of different chars 
-		var count2 = 0;
 		
-		// check b against a
+		// keep track of how many changes there are
+		var count = 0;
+		
 		for(var i = 0; i < a.length; i++){
-			if(b.indexOf(a[i]) < 0){
+			if(a[i] !== b[i]){
 				count++;
 			}
 		}
 		
-		// check a against b 
-		for(var i = 0; i < b.length; i++){
-			if(a.indexOf(b[i]) < 0){
-				count2++;
+		return count <= 1;
+		
+	}else{
+		
+		// find the larger string
+		var larger = a.length > b.length ? a : b;
+		var smaller = (a == larger) ? b : a;
+		var count = 0;
+		
+		// first check if adding the first char of the larger str to the smaller str will
+		// create a match
+		// I think this part is just a tiny optimization 
+		if(larger[0] + smaller === larger){
+			return true;
+		}
+		
+		var index2 = 0; // smaller string index
+		for(var i = 0; i < larger.length; i++){
+			// the index for the smaller string can increment at a different pace than the larger
+			// string's index. this way we can catch all the same chars that are just one away. 
+			// think about "pale" and "ple"
+			if(i <= smaller.length - 1 && larger[i] !== smaller[index2]){
+				count++;
+			}else if(i <= smaller.length - 1 && larger[i] === smaller[index2]){
+				index2++;
 			}
 		}
-		return (count1 <= 1) && (count2 <= 1); // if count is just 1 or 0, then the strings are one away 
-	}
-	
-	// if different lengths, need to check that only one char is different between the two strings  
-	// hash each string, find the larger one, and compare with the smaller one
-	var hash1 = hashString(a, 1);
-	var hash2 = hashString(b, 1);
-	var count = 0;
-	
-	var largerHash = (Object.keys(hash1).length > Object.keys(hash2).length) ? hash1 : hash2;
-	var smallerHash = (largerHash == hash1) ? hash2 : hash1;
-	
-	for(character in largerHash){
 		
-		if(smallerHash[character] === undefined){
-			count++;
-		}
-		
-		// if the difference in occurrences of a char > 0, (i.e. one str has 2 a's and the other has 1.)
-		// increment count as well 
-		if(Math.abs(largerHash[character] - smallerHash[character]) > 0){
-			count++;
-		}
+		return count <= 1;
 	}
-	return (count <= 1); // we want a difference of only 1 char 
-}
-
-// helper function to hash a string 
-function hashString(input, counter){
 	
-	var hash = {};
-	
-	for(var i = 0; i < input.length; i++){
-		if(hash[input[i]] >= 0){
-			hash[input[i]]++;
-		}else{
-			hash[input[i]] = counter;
-		}
-	}
-	return hash;
 }
 
 // 1.5 tests
 console.log("1.5 TESTS ==============================");
-console.log("aaabbb and ababab are one away: " + oneAway('aaabbb', 'ababab')); // true
-console.log("aaabbb and ababad are one away: " + oneAway('aaabbb', 'ababad')); // true
+console.log("aaabbb and aaabb are one away: " + oneAway('aaabbb', 'aaabb')); // true
 console.log("aaa and abc are one away: " + oneAway('aaa', 'abc')); // false
-console.log("abaa and abc are one away: " + oneAway('abaa', 'abc')); // false
-console.log("aaabbb and abbab are one away: " + oneAway('aaabbb', 'abbab')); // true
+console.log("aba and abc are one away: " + oneAway('aba', 'abc')); // true
 console.log("aba and ab are one away: " + oneAway('aba', 'ab')); // true
-console.log("abcdef and abcd are one away: " + oneAway('abcdef', 'abcd')); // false
-console.log("123abc and 124dba are one away: " + oneAway('123abc', '124dba')); // false
+console.log("123abc and 124aba are one away: " + oneAway('123abc', '124aba')); // false
+console.log("bbdddd and abdddd are one away: " + oneAway("bbdddd", "abdddd")); // true
+console.log("abaa and baa are one away: " + oneAway("abaa", "baa")); // true
+console.log("pale and ple are one away: " + oneAway("pale", "ple")); // true
+console.log("pale and palke are one away: " + oneAway("pale", "palke")); // true
+console.log("pales and pale are one away: " + oneAway("pales", "pale")); // true
+console.log("pale and bale are one away: " + oneAway("pale", "bale")); // true
+console.log("pale and bake are one away: " + oneAway("pale", "bake")); // falsse
 console.log("----------------------------------------\n");
 
 
