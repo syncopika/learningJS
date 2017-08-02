@@ -239,9 +239,9 @@ function oneAway(a, b){
 			// the index for the smaller string can increment at a different pace than the larger
 			// string's index. this way we can catch all the same chars that are just one away. 
 			// think about "pale" and "ple"
-			if(i <= smaller.length - 1 && larger[i] !== smaller[index2]){
+			if(larger[i] !== smaller[index2]){
 				count++;
-			}else if(i <= smaller.length - 1 && larger[i] === smaller[index2]){
+			}else if(larger[i] === smaller[index2]){
 				index2++;
 			}
 		}
@@ -260,6 +260,7 @@ console.log("aba and ab are one away: " + oneAway('aba', 'ab')); // true
 console.log("123abc and 124aba are one away: " + oneAway('123abc', '124aba')); // false
 console.log("bbdddd and abdddd are one away: " + oneAway("bbdddd", "abdddd")); // true
 console.log("abaa and baa are one away: " + oneAway("abaa", "baa")); // true
+console.log("abaa and abc are one away: " + oneAway("abaa", "abc")); // false
 console.log("pale and ple are one away: " + oneAway("pale", "ple")); // true
 console.log("pale and palke are one away: " + oneAway("pale", "palke")); // true
 console.log("pales and pale are one away: " + oneAway("pales", "pale")); // true
