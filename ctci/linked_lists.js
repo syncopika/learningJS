@@ -286,6 +286,8 @@ console.log("\n");
 
 // 2.7 intersection of two linked lists 
 // determine if two linked lists intersect 
+
+// this way is O(n^2) time. possibly the worst way to do this. :<
 function intersect(l1, l2){
 	
 	var curr = l1.head;
@@ -300,6 +302,57 @@ function intersect(l1, l2){
 		curr = curr.next;
 	}
 	return false;
+}
+
+// this way is better. O(m + n) time, and O(1) space
+// another way is using a hash table to store all the references of one list, but that would cost O(n) space
+function intersect2(l1, l2){
+	
+	// find the length of l1 and l2. if not equal, normalize.
+	// then have two pointers for each list and increment one at a time and see if they hit the same node. 
+	
+	var length1 = 0; // length1 corresponds with l1
+	var length2 = 0; // length2 corresponds with l2
+	
+	var curr1 = l1.head;
+	var curr2 = l2.head;
+	
+	while(curr1 !== null){
+		length1++;
+		curr1 = curr1.next;
+	}
+	
+	while(curr2 !== null){
+		length2++;
+		curr2 = curr2.next;
+	}
+	
+	// find out which is the longer list
+	// trim that list down 
+	// (i.e. move forward whatever number it takes to match the length of the shorter list)
+	var longer = length1 > length2 ? l1 : l2
+	var smaller = longer == l1 ? l2 : l1;
+	var difference = Math.abs(length1 - length2);
+	
+	var curr = longer.head;
+	for(var i = 0; i < difference; i++){
+		curr = curr.next;
+	}
+	
+	var curr2 = smaller.head;
+	// now longer list should be same length as smaller list 
+	while(curr !== null && curr2 !== null){
+		if(curr == curr2){
+			// found intersection
+			return curr.value;
+		}
+		curr = curr.next;
+		curr2 = curr2.next;
+	}
+	
+	return null;
+
+	
 }
 
 var lst3 = new LinkedList();
@@ -324,7 +377,7 @@ n2.next = n3;
 
 lst3.head = n1;
 lst4.head = n4;
-console.log("1->2->3 intersects with 4->2->3 : " + intersect(lst3, lst4));
+console.log("1->2->3 intersects with 4->2->3 : " + intersect2(lst3, lst4));
 
 // 1->2
 // 4->5 
@@ -333,7 +386,7 @@ n1.next = n2;
 n4.next = n5;
 lst3.head = n1;
 lst4.head = n4;
-console.log("1->2 intersects with 4->5 : " + intersect(lst3, lst4));
+console.log("1->2 intersects with 4->5 : " + intersect2(lst3, lst4));
 
 
 // 1->2->3
@@ -345,7 +398,7 @@ n4.next = n6;
 n6.next = n5;
 lst3.head = n1;
 lst4.head = n4;
-console.log("1->2->3 intersects with 4->2'->5 : " + intersect(lst3, lst4));
+console.log("1->2->3 intersects with 4->2'->5 : " + intersect2(lst3, lst4));
 console.log("\n");
 
 
