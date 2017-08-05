@@ -8,11 +8,8 @@ start @ 1 = stack 2
 start @ 2 = stack 3
 
 --------------------------------------------
-1	|2	|3	|1	|2	|3	|1	|2	|3	|1	|2 ...
+1  | 2 | 3 | 1 | 2 | 3 | 1 | 2 | 3 | 1 |2 ...
 --------------------------------------------
- ^           ^           ^           ^
-
- ^ => stack 1
 
 maintain 3 pointers for each stack.  
 keep track of size for each stack too. 
