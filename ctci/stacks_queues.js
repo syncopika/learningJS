@@ -148,63 +148,63 @@ console.log(newStack.peek(3)); // 150
 
 // example
 /*
-1.											2.														
+	1.										2.														
 	---------		---------				---------		---------								
-	|	5	|		|		|				|		|		|		|
+	|   5	|		|	|				|	|		|	|
 	---------		---------				---------		---------
-	|	2	|  => 	|		|				|	2	|  => 	|		|
+	|   2	|     => 	|	|				|   2   |      => 	|	|
 	---------		---------				---------		---------	
-	|	4	|		|		|				|	4	|		|		|
+	|   4	|		|	|				|   4   |		|	|
 	---------		---------				---------		---------	
-	|	3	|		|		|				|	3	|		|	5	|
+	|   3	|		|	|				|   3   |		|   5   |
 	----------		---------				----------		---------
-                                            since stack2 was empty, 5 just gets pushed to stack2.
+         								since stack2 was empty, 5 just gets pushed to stack2.
 
 	3.										4.														
 	---------		---------				---------		---------								
-	|		|		|		|				|		|		|		|
+	|	|		|	|				|	|		|	|
 	---------		---------				---------		---------
-	|	5	|  => 	|		|				|		|  => 	|		|
+	|   5   |       => 	|	|				|	|       => 	|	|
 	---------		---------				---------		---------	
-	|	4	|		|		|				|	4	|		|	5	|
+	|   4	|		|	|				|   4	|		|   5	|
 	---------		---------				---------		---------	
-	|	3	|		|	2	|				|	3	|		|	2	|
+	|   3	|		|   2	|				|   3	|		|   2	|
 	----------		---------				----------		---------
-    temp = 2;								2 is not bigger than 5, quit inner loop.
-	there's only 1 element                  put 5 on stack2.
+        temp = 2;							2 is not bigger than 5, quit inner loop.
+	there's only 1 element                                          put 5 on stack2.
 	to check in stack2.
 	5 > 2, so put 5 back on stack1.
 	put temp, which is 2, on stack2.
 	
 	5.										6.														
 	---------		---------				---------		---------								
-	|		|		|		|				|		|		|		|
+	|	|		|	|				|	|		|	|
 	---------		---------				---------		---------
-	|		|  => 	|		|				|		|  => 	|	5	|
+	|	|      => 	|	|				|	|       => 	|   5	|
 	---------		---------				---------		---------	
-	|	5	|		|	4	|				|		|		|	4	|
+	|   5	|		|   4	|				|	|		|   4	|
 	---------		---------				---------		---------	
-	|	3	|		|	2	|				|	3	|		|	2	|
+	|   3	|		|   2	|				|   3	|		|   2	|
 	----------		---------				----------		---------
-	temp = 4;                                temp = 5;
-	5 > 4, put 5 on stack1.                  4 < 5, so 5 goes on stack2.
+	temp = 4;                                                       temp = 5;
+	5 > 4, put 5 on stack1.                                         4 < 5, so 5 goes on stack2.
 	2 is not bigger than 4, 
 	so don't do anything to 2. 
 	4 goes on stack2.
 	
 	7.										8.														
 	---------		---------				---------		---------								
-	|		|		|		|				|		|		|	5	|
+	|	|		|	|				|	|		|   5	|
 	---------		---------				---------		---------
-	|		|  => 	|		|				|		|  => 	|	4	|
+	|	|     => 	|	|				|	|      => 	|   4	|
 	---------		---------				---------		---------	
-	|	4	|		|	3	|				|		|		|	3	|
+	|   4	|		|   3	|				|	|		|   3	|
 	---------		---------				---------		---------	
-	|	5	|		|	2	|				|		|		|	2	|
+	|   5	|		|   2	|				|	|		|   2	|
 	----------		---------				----------		---------
-	temp = 3;								awesome! this is what we want.
-	5 > 3, so put 5 on stack1.				now just pop and push stack2 back to stack1
-	then peek at stack2 again.              and it should be smaller to larger, top to bottom.
+	temp = 3;						        awesome! this is what we want.
+	5 > 3, so put 5 on stack1.				        now just pop and push stack2 back to stack1
+	then peek at stack2 again.                                      and it should be smaller to larger, top to bottom.
 	4 > 3 also, so push 4 onto stack1.
 	2 is not larger than 3, so stop there. 
 	then put 3 on stack2.
