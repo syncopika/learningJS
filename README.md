@@ -1,6 +1,3 @@
 # learningJS
-i'm learning javascript...  
-...mostly through "Eloquent Javascript" by Marijn Haverbeke.  
-
-...and freecodecamp.com, codeEval, and checkIO!
+learning/practicing javascript with various exercises!
 
