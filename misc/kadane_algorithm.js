@@ -1,5 +1,6 @@
 
 // kadane algorithm, including negative numbers
+// cmsc351
 
 function maxSum(arr){
 
